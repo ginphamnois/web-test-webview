@@ -9,6 +9,7 @@ function App() {
     // Function to handle messages from React Native
     const handleMessage = (event: any) => {
       const data = event.data;
+      console.log("🚀 ~ handleMessage ~ data:", data)
       
       // Only handle messages with expected data format
       if (data && data.type === "data") {
