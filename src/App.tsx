@@ -9,7 +9,7 @@ function App() {
     // Function to handle messages from React Native
     const handleMessage = (event: any) => {
       const data = event.data;
-
+      
       // Only handle messages with expected data format
       if (data && data.type === "data") {
         setMessage(data.payload); // Update state with the received data
@@ -31,7 +31,7 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <p>{message}</p>
+        <p>Message from React Native: {message}</p>
         <a
           className="App-link"
           href="https://reactjs.org"
