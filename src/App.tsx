@@ -10,7 +10,7 @@ function App() {
     const handleMessage = (event: any) => {
       const data = event.data;
       try{
-        fetch("http://example.com/api/endpoint/", {
+        fetch("http://localhost:4000/", {
           method: "post",
           headers: {
           'Accept': 'application/json',
