@@ -9,14 +9,27 @@ function App() {
     // Function to handle messages from React Native
     const handleMessage = (event: any) => {
       const data = event.data;
-      console.log("🚀 ~ handleMessage ~ data:", data)
+      try{
+        fetch("http://example.com/api/endpoint/", {
+          method: "post",
+          headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+          },
+          
+          //make sure to serialize your JSON body
+          body: JSON.stringify(data)
+          })
+      }catch (e){
+        console.error(e)
+      }
+
       
       // Only handle messages with expected data format
       if (data && data.type === "data") {
         setMessage(data.payload); // Update state with the received data
       }
     };
-
     // Add the message listener when the component mounts
     window.addEventListener("message", handleMessage);
 
