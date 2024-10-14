@@ -1,43 +1,24 @@
 import React, { useEffect, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useRNHandler } from "./utils/MessageEventEmiter";
 
 function App() {
   // const [code, setCode ] = useState('');
   const [message, setMessage] = useState("");
-  useEffect(() => {
-    // Function to handle messages from React Native
-    const handleMessage = (event: any) => {
-      const data = event.data;
-      try{
-        fetch("http://localhost:4000/", {
-          method: "post",
-          headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-          },
-          
-          //make sure to serialize your JSON body
-          body: JSON.stringify(data)
-          })
-      }catch (e){
-        console.error(e)
-      }
+  // Define the callback function to handle the event
+  const handleMessage = (payload: any) => {
+    toast(payload);
+    console.log("Message from RN:", payload);
+    setMessage(payload);
+  };
 
-      
-      // Only handle messages with expected data format
-      if (data && data.type === "data") {
-        setMessage(data.payload); // Update state with the received data
-      }
-    };
-    // Add the message listener when the component mounts
-    window.addEventListener("message", handleMessage);
+  // Register the handler for a specific action
+  useRNHandler("message", handleMessage); // This line registers the handler
 
-    // Clean up the listener when the component unmounts
-    return () => {
-      window.removeEventListener("message", handleMessage);
-    };
-  }, []);
+  const notify = () => toast("Wow so easy!");
   return (
     <div className="App">
       <header className="App-header">
@@ -45,6 +26,8 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
+        <button onClick={notify}>Notify!</button>
+
         <p>Message from React Native: {message}</p>
         <a
           className="App-link"
@@ -55,6 +38,7 @@ function App() {
           Learn React
         </a>
       </header>
+      <ToastContainer />
     </div>
   );
 }
